@@ -1,0 +1,20 @@
+[project]
+name = "furniture-fastapi"
+version = "0.1.0"
+description = "Furniture FastAPI backend"
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+    "fastapi[standard]>=0.116.0",
+    "flask>=2.3.0",
+    "pandas",
+    "pydantic",
+    "requests",
+    "uvicorn",
+]
+
+[tool.uv]
+package = false
+
+[tool.fastapi]
+entrypoint = "app.main:app"
