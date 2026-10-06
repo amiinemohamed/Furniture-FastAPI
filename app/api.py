@@ -1,43 +1,34 @@
-from pathlib import Path
-from typing import List
-import pickle
+from typing import Annotated
 
-import uvicorn
-from fastapi import FastAPI, HTTPException
-from pydantic import BaseModel
+from fastapi import APIRouter
+from pydantic import BaseModel, Field
 
-BASE_DIR = Path(__file__).resolve().parent
-MODEL_PATH = BASE_DIR / "model.pkl"          # chemin relatif au projet (plus de chemin Windows en dur)
+from app.prediction import FEATURE_NAMES, predict_price
 
-with open(MODEL_PATH, "rb") as f:
-    model = pickle.load(f)
-
-# Ordre EXACT des colonnes utilisé à l'entraînement dans le notebook
-FEATURE_NAMES = ['category', 'sellable_online', 'other_colors', 'depth', 'height', 'width']
-
-app = FastAPI(title="Furniture price prediction API")
+router = APIRouter()
 
 
 class FurnitureInput(BaseModel):
-    features: List[float]   # [category, sellable_online, other_colors, depth, height, width]
+    features: Annotated[
+        list[float],
+        Field(
+            min_length=len(FEATURE_NAMES),
+            max_length=len(FEATURE_NAMES),
+            description=f"Values ordered as {', '.join(FEATURE_NAMES)}.",
+        ),
+    ]
 
 
-@app.get("/")
-def home():
-    return {"message": "ML model for furniture price prediction",
-            "expected_features": FEATURE_NAMES}
+class FurniturePrediction(BaseModel):
+    price: float
 
 
-@app.post("/predict")
-def predict(data: FurnitureInput):
-    if len(data.features) != len(FEATURE_NAMES):
-        raise HTTPException(
-            status_code=422,
-            detail=f"{len(FEATURE_NAMES)} features attendues : {FEATURE_NAMES}",
-        )
-    price = model.predict([data.features])[0]
-    return {"price": round(float(price), 2)}
+@router.post("/predict", response_model=FurniturePrediction, include_in_schema=False)
+@router.post("/api/predict", response_model=FurniturePrediction)
+def predict(data: FurnitureInput) -> FurniturePrediction:
+    return FurniturePrediction(price=predict_price(data.features))
 
 
-if __name__ == "__main__":
-    uvicorn.run("api:app", host="127.0.0.1", port=8000, reload=True)
+@router.get("/api/health", tags=["health"])
+def health() -> dict[str, str]:
+    return {"status": "ok"}

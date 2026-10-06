@@ -1,15 +1,15 @@
 [project]
 name = "furniture-fastapi"
 version = "0.1.0"
-description = "Furniture FastAPI backend"
+description = "Furniture price prediction website and FastAPI API gateway"
 readme = "README.md"
 requires-python = ">=3.10"
 dependencies = [
     "fastapi[standard]>=0.116.0",
-    "flask>=2.3.0",
-    "pandas",
+    "jinja2>=3.1.0",
     "pydantic",
-    "requests",
+    "python-multipart>=0.0.20",
+    "scikit-learn>=1.5.0",
     "uvicorn",
 ]
 

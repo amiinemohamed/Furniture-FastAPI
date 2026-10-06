@@ -4,7 +4,7 @@
    <head>
       <meta charset="UTF-8">
       <title>Price furniture prediction</title>
-      <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+      <link rel="stylesheet" href="{{ request.url_for('static', path='/style.css') }}">
    </head>
 
    <body>
@@ -15,7 +15,7 @@
 
          <div class="login">
 
-            <form action="{{ url_for('predict')}}"method="post">
+            <form action="{{ request.url_for('predict_form') }}" method="post">
             <table class="entryForm">
 
             <tr>
@@ -60,18 +60,18 @@
             </tr>
 
             <tr>
-            <th>Depth：</th>
-            <td><input type="number" name="depth" placeholder="Depth cm" min="0.01" step="any" required />
+            <th>Depth:</th>
+            <td><input type="number" name="depth" placeholder="Depth cm" min="0.01" step="any" required /></td>
             </tr>
 
             <tr>
-            <th>Height：</th>
-            <td><input type="number" name="height" placeholder="Height cm" min="0.01" step="any" required />
+            <th>Height:</th>
+            <td><input type="number" name="height" placeholder="Height cm" min="0.01" step="any" required /></td>
             </tr>
 
             <tr>
-            <th>Width：</th>
-            <td><input type="number" name="width" placeholder="Width cm" min="0.01" step="any" required />
+            <th>Width:</th>
+            <td><input type="number" name="width" placeholder="Width cm" min="0.01" step="any" required /></td>
             </tr>
 
             </table>
@@ -89,10 +89,9 @@
 
       <br>
       <br>
-      {% if error_text %}
-      <p role="alert">{{ error_text }}</p>
+      {% if prediction_text %}
+      <p role="status">{{ prediction_text }}</p>
       {% endif %}
-      {{prediction_text}}
       </div>
 
    </body>
