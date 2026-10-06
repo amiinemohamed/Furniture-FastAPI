@@ -32,6 +32,10 @@ Invoke-RestMethod -Method Post `
 The existing `POST /predict` JSON endpoint remains available as a compatibility
 alias. `GET /api/health` provides a lightweight health check.
 
+The bundled model is a decision tree, so nearby inputs may fall into the same
+leaf and receive the same price. Retraining it to produce less stepwise
+predictions requires the original training dataset.
+
 ## Deploy to FastAPI Cloud
 
 The FastAPI CLI entrypoint is configured in `pyproject.toml` as

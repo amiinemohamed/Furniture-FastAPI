@@ -22,23 +22,23 @@
             <th>Category：</th>
             <td>
             <select id="category" name="category">
-               <option value="0">Bar furniture</option>
-               <option value="1">Beds</option>
-               <option value="2">Bookcases & shelving units</option>
-               <option value="3">Cabinets & cupboards</option>
-               <option value="4">Cafe furniture</option>
-               <option value="5">Chairs</option>
-               <option value="6">Chests of drawers & drawer units</option>
-               <option value="7">Children's furniture</option>
-               <option value="8">Nursery furniture</option>
-               <option value="9">Outdoor furniture</option>
-               <option value="10">Room dividers</option>
-               <option value="11">Sideboards, buffets & console tables</option>
-               <option value="12">Sofas & armchairs</option>
-               <option value="13">TV & media furniture</option>
-               <option value="14">Tables & desks</option>
-               <option value="15">Trolleys</option>
-               <option value="16">Wardrobes</option>
+               <option value="0" {% if values.category == '0' %}selected{% endif %}>Bar furniture</option>
+               <option value="1" {% if values.category == '1' %}selected{% endif %}>Beds</option>
+               <option value="2" {% if values.category == '2' %}selected{% endif %}>Bookcases & shelving units</option>
+               <option value="3" {% if values.category == '3' %}selected{% endif %}>Cabinets & cupboards</option>
+               <option value="4" {% if values.category == '4' %}selected{% endif %}>Cafe furniture</option>
+               <option value="5" {% if values.category == '5' %}selected{% endif %}>Chairs</option>
+               <option value="6" {% if values.category == '6' %}selected{% endif %}>Chests of drawers & drawer units</option>
+               <option value="7" {% if values.category == '7' %}selected{% endif %}>Children's furniture</option>
+               <option value="8" {% if values.category == '8' %}selected{% endif %}>Nursery furniture</option>
+               <option value="9" {% if values.category == '9' %}selected{% endif %}>Outdoor furniture</option>
+               <option value="10" {% if values.category == '10' %}selected{% endif %}>Room dividers</option>
+               <option value="11" {% if values.category == '11' %}selected{% endif %}>Sideboards, buffets & console tables</option>
+               <option value="12" {% if values.category == '12' %}selected{% endif %}>Sofas & armchairs</option>
+               <option value="13" {% if values.category == '13' %}selected{% endif %}>TV & media furniture</option>
+               <option value="14" {% if values.category == '14' %}selected{% endif %}>Tables & desks</option>
+               <option value="15" {% if values.category == '15' %}selected{% endif %}>Trolleys</option>
+               <option value="16" {% if values.category == '16' %}selected{% endif %}>Wardrobes</option>
             </select>
             </td>
             </tr>
@@ -46,32 +46,32 @@
             <tr>
             <th>Sellable Online：</th>
             <td>
-            <input type="radio" name="sellable_online" value="1" checked>Yes
-            <input type="radio" name="sellable_online" value="0">No
+            <input type="radio" name="sellable_online" value="1" {% if values.sellable_online == '1' %}checked{% endif %}>Yes
+            <input type="radio" name="sellable_online" value="0" {% if values.sellable_online == '0' %}checked{% endif %}>No
             </td>
             </tr>
 
             <tr>
             <th>Other color：</th>
             <td>
-            <input type="radio" name="other_colors" value="1" checked>Yes
-            <input type="radio" name="other_colors" value="0">No
+            <input type="radio" name="other_colors" value="1" {% if values.other_colors == '1' %}checked{% endif %}>Yes
+            <input type="radio" name="other_colors" value="0" {% if values.other_colors == '0' %}checked{% endif %}>No
             </td>
             </tr>
 
             <tr>
             <th>Depth:</th>
-            <td><input type="number" name="depth" placeholder="Depth cm" min="0.01" step="any" required /></td>
+            <td><input type="number" name="depth" placeholder="Depth cm" min="0.01" step="any" value="{{ values.depth }}" required /></td>
             </tr>
 
             <tr>
             <th>Height:</th>
-            <td><input type="number" name="height" placeholder="Height cm" min="0.01" step="any" required /></td>
+            <td><input type="number" name="height" placeholder="Height cm" min="0.01" step="any" value="{{ values.height }}" required /></td>
             </tr>
 
             <tr>
             <th>Width:</th>
-            <td><input type="number" name="width" placeholder="Width cm" min="0.01" step="any" required /></td>
+            <td><input type="number" name="width" placeholder="Width cm" min="0.01" step="any" value="{{ values.width }}" required /></td>
             </tr>
 
             </table>
@@ -91,6 +91,7 @@
       <br>
       {% if prediction_text %}
       <p role="status">{{ prediction_text }}</p>
+      <p class="model-note">This model is a decision tree. Similar inputs can fall into the same learned group and receive the same predicted price.</p>
       {% endif %}
       </div>
 
